@@ -1,0 +1,16 @@
+version: '2'
+services:
+  web:
+    build:
+      context: ./web
+      args:
+        USER_NAME: $USER_NAME
+        USER_ID: $USER_ID
+        GROUP_ID: $GROUP_ID
+    env_file: ./.env
+    ports:
+      # 8080ポートでコンテナの外に公開する
+      - '8080:80'
+    volumes:
+      # ソースはここに置く
+      - ../src:/var/www/html
