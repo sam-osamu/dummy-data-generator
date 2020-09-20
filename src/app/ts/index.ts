@@ -9,8 +9,10 @@
 //
 // new Home({el: "#app"});
 
-import GeneratorConfig from "./generator/config/GeneratorConfig";
-import SQLGenerator from "./generator/SQLGenerator";
+console.log("test");
+
+import {GeneratorConfig} from "./generator/config/GeneratorConfig";
+import {SQLGenerator} from "./generator/SQLGenerator";
 
 const config: GeneratorConfig = {
     defaultCount: 30,
@@ -74,4 +76,4 @@ const config: GeneratorConfig = {
 };
 
 const gen = new SQLGenerator(config);
-console.log(gen.generate())
+console.log(gen.generate());

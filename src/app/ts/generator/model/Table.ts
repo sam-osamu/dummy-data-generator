@@ -1,7 +1,7 @@
-import TableConfig from "../config/TableConfig";
-import Column from "./Column";
+import {TableConfig} from "../config/TableConfig";
+import {Column} from "./Column";
 
-export default class Table {
+export class Table {
     private readonly tableConfig: TableConfig;
     private readonly cols: Column[];
 

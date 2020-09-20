@@ -1,8 +1,8 @@
-import Table from "../model/Table";
-import ColumnOutput from "./ColumnOutput";
-import GeneratorConfig from "../config/GeneratorConfig";
+import {Table} from "../model/Table";
+import {ColumnOutput} from "./ColumnOutput";
+import {GeneratorConfig} from "../config/GeneratorConfig";
 
-export default class TableOutput {
+export class TableOutput {
     private readonly generatorConfig: GeneratorConfig;
     private readonly src: Table;
     private readonly cols: ColumnOutput[];

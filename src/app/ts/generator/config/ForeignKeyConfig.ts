@@ -1,4 +1,4 @@
-export default interface ForeignKey {
+export interface ForeignKeyConfig {
     table: string
     column: string
 }

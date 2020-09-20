@@ -1,9 +1,9 @@
 import * as faker from "faker";
-import GeneratorConfig from "./config/GeneratorConfig";
-import Table from "./model/Table";
-import TableOutput from "./output/TableOutput";
+import {GeneratorConfig} from "./config/GeneratorConfig";
+import {Table} from "./model/Table";
+import {TableOutput} from "./output/TableOutput";
 
-export default class SQLGenerator {
+export class SQLGenerator {
     private readonly config: GeneratorConfig;
     private readonly tables: Table[];
 
@@ -45,9 +45,24 @@ export default class SQLGenerator {
             out.push("  (" + table.columns.map(i => i.name).join(", ") + ")");
             out.push("VALUES");
 
-            const values: string[] = [];
+            const matrix: string[][] = [];
+            for(let i = 0; i < table.count; i++) {
+                matrix.push(new Array<string>(table.columns.length))
+            }
+
+            let columnIdx = 0;
             table.columns.forEach(column => {
-                values.push("  (" + column.values.map(i => `'${i}'`).join(", ") + ")")
+                let recordIdx = 0;
+                column.values.forEach(value => {
+                    matrix[recordIdx][columnIdx] = value.toString();
+                    recordIdx++;
+                });
+                columnIdx++;
+            });
+
+            const values: string[] = [];
+            matrix.forEach(line => {
+                values.push("  (" + line.map(i => "'" + i + "'").join(", ") + ")");
             });
 
             out.push(values.join(",\n") + ";");

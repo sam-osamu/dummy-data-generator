@@ -1,8 +1,8 @@
-import Table from "./Table";
-import ColumnConfig from "../config/ColumnConfig"
-import ForeignKey from "./ForeignKey";
+import {Table} from "./Table";
+import {ColumnConfig} from "../config/ColumnConfig"
+import {ForeignKey} from "./ForeignKey";
 
-export default class Column {
+export class Column {
     private readonly parent: Table;
     private readonly input: ColumnConfig;
 

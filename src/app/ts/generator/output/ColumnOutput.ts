@@ -1,9 +1,9 @@
-import Column from "../model/Column";
-import ForeignKey from "../model/ForeignKey";
-import TableOutput from "./TableOutput";
+import {Column} from "../model/Column";
+import {ForeignKey} from "../model/ForeignKey";
+import {TableOutput} from "./TableOutput";
 import * as faker from "faker";
 
-export default class ColumnOutput {
+export class ColumnOutput {
     private readonly parent: TableOutput;
     private readonly src: Column;
     private readonly value: any[];

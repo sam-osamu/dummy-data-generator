@@ -1,14 +1,17 @@
 const Path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const GENERATE_SOURCE_MAPS = (process.env.NODE_ENV !== 'production');
 
 module.exports = [
     {
+        mode: process.env.NODE_ENV,
+        context: Path.resolve(__dirname),
         entry: [
-            "./src/main/ts/index.ts",
-            "./src/main/scss/index.sass"
+            "./app/ts/index.ts",
+            "./app/scss/index.scss"
         ],
         output: {
             path: Path.resolve(__dirname, "public"),
@@ -18,6 +21,7 @@ module.exports = [
             extensions: ['.ts', '.js', '.scss', ".vue"]
         },
         plugins: [
+            new HardSourceWebpackPlugin(),
             new VueLoaderPlugin(),
             new MiniCssExtractPlugin({
                 filename: 'index.css'
@@ -26,11 +30,13 @@ module.exports = [
         module: {
             rules: [
                 {
+                    test: /\.js$/,
+                    loader: "babel-loader",
+                    exclude: /node_modules/,
+                },
+                {
                     test: /\.ts$/,
                     use: [
-                        {
-                            loader: "babel-loader"
-                        },
                         {
                             loader: "ts-loader",
                             options: {
@@ -42,7 +48,22 @@ module.exports = [
                 },
                 {
                     test: /\.vue$/,
-                    loader: "vue-loader",
+                    use: [
+                        {
+                            loader: "vue-loader"
+                        }
+                    ]
+                },
+                {
+                    test: /\.(jpg|png|gif)$/,
+                    use: {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: "./img",
+                            publicPath: item => "../img/" + item
+                        }
+                    },
                     exclude: /(node_modules)/
                 },
                 {
@@ -64,31 +85,6 @@ module.exports = [
                             }
                         },
                     ],
-                    exclude: /(node_modules)/
-                },
-                {
-                    test: /\.(jpg|png|gif)$/,
-                    use: {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: "./img",
-                            publicPath: item => "../img/" + item
-                        }
-                    },
-                    exclude: /(node_modules)/
-                },
-                {
-                    test: /\.woff$/,
-                    use: {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: "./fonts",
-                            publicPath: item => "../fonts/" + item
-                        }
-                    },
-                    exclude: /(node_modules)/
                 },
             ],
         },
