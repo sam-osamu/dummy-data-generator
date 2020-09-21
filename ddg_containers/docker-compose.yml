@@ -13,4 +13,4 @@ services:
       - '8080:80'
     volumes:
       # ソースはここに置く
-      - ../src:/var/www/html
+      - ../:/var/www/html
