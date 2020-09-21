@@ -14,7 +14,7 @@ module.exports = [
             "./app/scss/index.scss"
         ],
         output: {
-            path: Path.resolve(__dirname, "public"),
+            path: Path.resolve(__dirname, "docs"),
             filename: 'index.js'
         },
         resolve: {

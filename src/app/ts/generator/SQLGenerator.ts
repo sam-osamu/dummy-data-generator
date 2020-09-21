@@ -54,7 +54,7 @@ export class SQLGenerator {
             table.columns.forEach(column => {
                 let recordIdx = 0;
                 column.values.forEach(value => {
-                    matrix[recordIdx][columnIdx] = value.toString();
+                    matrix[recordIdx][columnIdx] = value.toString().replace("\r\n", "").replace("\n", "");
                     recordIdx++;
                 });
                 columnIdx++;
