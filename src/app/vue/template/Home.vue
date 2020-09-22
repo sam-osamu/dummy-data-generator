@@ -1,7 +1,7 @@
 <template>
     <div class="rounded">
-        <home-header class="mb-4"/>
-        <div class="container">
+        <home-header />
+        <div class="container p-4">
             <b-card class="mb-4">
                 <introduction/>
             </b-card>
@@ -13,14 +13,13 @@
                 <config-input-text-area class="w-100"/>
                 <generate-button class="mt-4"/>
             </b-card>
-            <b-card class="mb-4">
+            <b-card>
                 <b-card-header header-tag="h4">出来上がったダミーデータ</b-card-header>
                 <div class="d-flex justify-content-end">
                     <copy-to-clipboard-button/>
                 </div>
                 <sql-output-text-area/>
             </b-card>
-
         </div>
     </div>
 </template>
