@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import Home from '../vue/template/Home.vue';
 
-// Install BootstrapVue
+Vue.config.devtools = process.env.NODE_ENV !== "production";
+
 Vue.use(BootstrapVue);
-// Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
 
 new Home({el: "#app"});

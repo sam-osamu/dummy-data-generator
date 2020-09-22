@@ -1,7 +1,7 @@
 const Path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const GENERATE_SOURCE_MAPS = (process.env.NODE_ENV !== 'production');
 
@@ -21,7 +21,7 @@ module.exports = [
             extensions: ['.ts', '.js', '.scss', ".vue"]
         },
         plugins: [
-            new HardSourceWebpackPlugin(),
+            // new HardSourceWebpackPlugin(),
             new VueLoaderPlugin(),
             new MiniCssExtractPlugin({
                 filename: 'index.css'
@@ -47,11 +47,17 @@ module.exports = [
                     exclude: /(node_modules)/
                 },
                 {
-                    test: /\.vue$/,
+                    test: /\.(vue|md)$/,
                     use: [
                         {
                             loader: "vue-loader"
-                        }
+                        },
+                        {
+                            loader: 'markdown-to-vue-loader',
+                            options: {
+                                exportSource: true
+                            },
+                        },
                     ]
                 },
                 {
@@ -85,6 +91,17 @@ module.exports = [
                             }
                         },
                     ],
+                },
+                {
+                    test: /\.woff$/,
+                    use: {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: "./fonts"
+                        }
+                    },
+                    exclude: /(vendor|node_modules)/
                 },
             ],
         },

@@ -1,14 +1,16 @@
 <template>
-    <b-form-textarea class="w-100" rows="8" v-bind:value="outputSql"></b-form-textarea>
+    <b-form-textarea class="w-100 font-hack-gen font-size-code" rows="8" v-bind:value="outputSql"></b-form-textarea>
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
+    import {Component, Vue} from "vue-property-decorator";
+    import {ApplicationStore} from "../../ts/store/ApplicationStoreModule";
 
-    @Component({})
+    @Component
     export default class SqlOutputTextArea extends Vue {
-        @Prop({default: "", required: true})
-        private outputSql!: string;
+        get outputSql(): string {
+            return ApplicationStore.getGeneratedSql;
+        }
     }
 </script>
 

@@ -1,23 +1,15 @@
 <template>
-    <b-button block variant="primary" v-on:click="generate">作る！</b-button>
+    <b-button block variant="dark" v-on:click="generate">Generate!</b-button>
 </template>
 
 <script lang="ts">
-    import {Component, Emit, Prop, Vue} from "vue-property-decorator";
-    import {GeneratorConfig} from "../../ts/generator/config/GeneratorConfig";
-    import {SQLGenerator} from "../../ts/generator/SQLGenerator";
+    import {Component, Vue} from "vue-property-decorator";
+    import {ApplicationStore} from "../../ts/store/ApplicationStoreModule";
 
     @Component({})
     export default class GenerateButton extends Vue {
-        @Prop({default: null, required: true})
-        private generateConfig!: GeneratorConfig;
-
-        @Emit("on-generate-completed")
-        private emitOnGenerateCompleted(result: string) {}
-
-        private generate() {
-            const gen = new SQLGenerator(this.generateConfig);
-            this.emitOnGenerateCompleted(gen.generate());
+        generate() {
+            ApplicationStore.generate()
         }
     }
 </script>

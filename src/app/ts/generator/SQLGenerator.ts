@@ -15,6 +15,11 @@ export class SQLGenerator {
 
     public generate(): string {
         const tableOutput: TableOutput[] = this.tables.map(i => new TableOutput(this.config, i));
+        SQLGenerator.execGenerateColumns(tableOutput);
+        return SQLGenerator.generateSqlScript(tableOutput);
+    }
+
+    private static execGenerateColumns(tableOutput: TableOutput[]) {
         const tableMap = new Map(tableOutput.map(i => [i.name, new Map(i.columns.map(j => [j.name, j]))]));
 
         tableOutput.forEach(table => {
@@ -37,7 +42,9 @@ export class SQLGenerator {
                 }
             })
         });
+    }
 
+    private static generateSqlScript(tableOutput: TableOutput[]): string {
         const out: string[] = [];
 
         tableOutput.forEach(table => {

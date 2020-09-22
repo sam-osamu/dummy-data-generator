@@ -1,2 +1,55 @@
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap-vue/src/index.scss';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
+
+@font-face {
+  font-family: "hack-gen";
+  src: url("./fonts/HackGen-Regular.woff");
+}
+
+.font-hack-gen {
+  font-family: 'hack-gen', monospace;
+}
+
+.font-size-code {
+  font-size: 10pt;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  height: 100%;
+  font-family: 'hack-gen', monospace;
+
+  &::before {
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: " ";
+    position: absolute;
+    background-image: url("image/18693.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 0.60;
+    z-index: -2;
+  }
+
+  &::after {
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000000;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.10;
+  }
+}

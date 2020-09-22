@@ -1,24 +1,26 @@
 <template>
-    <b-form-textarea class="w-100" rows="16" v-model:value="configJson"></b-form-textarea>
+    <b-form-textarea class="w-100 font-hack-gen font-size-code" rows="16" v-bind:value="text" @input="onTextAreaChanged"></b-form-textarea>
 </template>
 
 <script lang="ts">
-    import {Component, Emit, Vue, Watch} from "vue-property-decorator";
-    import {GeneratorConfig} from "../../ts/generator/config/GeneratorConfig";
+    import {Component, Vue} from "vue-property-decorator";
+    import {ApplicationStore} from "../../ts/store/ApplicationStoreModule";
 
-    @Component({})
+    @Component
     export default class ConfigInputTextArea extends Vue {
-        private configJson: string = "";
-
-        @Watch("configJson")
-        private onConfigJsonChanged() {
-            const config: GeneratorConfig = JSON.parse(this.configJson);
-            this.emitConfigChanged(config);
+        get text() {
+            return ApplicationStore.getConfigText;
         }
 
-        @Emit("on-config-changed")
-        private emitConfigChanged(config: GeneratorConfig) {
-
+        onTextAreaChanged(event: any) {
+            if (event.target instanceof HTMLInputElement) {
+                const element = event.target;
+                if (element.textContent !== null) {
+                    ApplicationStore.setConfigText(element.textContent)
+                }
+            } else if (typeof event === "string") {
+                ApplicationStore.setConfigText(event)
+            }
         }
     }
 </script>
