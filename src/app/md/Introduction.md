@@ -1,13 +1,15 @@
 ### これは？
 名前の通り、ダミーデータをInsertするSQL文を作成するツールです。
 乱数やランダム文字列だけでなく、架空の人名や住所、電話番号などの **それっぽいデータ** を作ることが出来ます。
+  
+設定値や生成結果（テーブル定義等のDBに関連する情報）は一切サーバーに送信しておらず、  
+全てクライアント側で処理を行っていますので、安心してお使いいただけると思います。
 
 ### 使い方
 下記のような書式に則って記述したJSONをテキストボックスに記述し、Generateボタンを押すと作成できます。  
-設定値入力フォームにサンプルデータ作成ボタンがあるので、サンプルデータと見比べながらだとわかりやすいかも。
 
 <details>
-<summary>... 設定値の説明を展開 ...</summary>
+<summary>... 設定値の説明とサンプルを展開 ...</summary>
 <div>
 
 * defaultCount  
@@ -49,6 +51,61 @@
       * columns
       必須。文字列のみ許容。  
       制約先のカラム名を設定する。 制限事項は上記のtableと同様。
+
+<br />
+
+以下、サンプル。
+```json
+{
+    "defaultCount": 30,
+    "tables": [
+        {
+            "name": "employee_table",
+            "count": 5,
+            "columns": [
+                {
+                    "name": "id",
+                    "autoIncrement": true
+                },
+                {
+                    "name": "name",
+                    "fakerOrder": "name.findName"
+                },
+                {
+                    "name": "zip_code",
+                    "fakerOrder": "address.zipCode"
+                },
+                {
+                    "name": "address",
+                    "fakerOrder": [
+                        "address.state",
+                        "address.city",
+                        "address.streetAddress",
+                        "address.secondaryAddress"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "employee_comments_table",
+            "count": 100,
+            "columns": [
+                {
+                    "name": "id",
+                    "autoIncrement": true
+                },
+                {
+                    "name": "main_id",
+                    "foreignKey": {
+                        "table": "employee_table",
+                        "column": "id"
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
 
 </div>
 </details>
