@@ -1,19 +1,30 @@
 <template>
-    <div>
+    <div class="rounded">
         <home-header class="mb-4"/>
         <div class="container">
-            <b-card>
-                <div v-html="sampleMdHtml"/>
+            <b-card class="mb-4">
+                <introduction/>
+            </b-card>
+            <b-card class="mb-4">
+                <b-card-header header-tag="h3">ダミーデータ生成設定値</b-card-header>
                 <div class="d-flex justify-content-end">
                     <insert-sample-button/>
                 </div>
                 <config-input-text-area class="w-100"/>
+                <generate-button class="mt-4"/>
             </b-card>
-            <generate-button class="mt-4 mb24"/>
-            <sql-output-text-area/>
+            <b-card class="mb-4">
+                <b-card-header header-tag="h3">出来上がったダミーデータ</b-card-header>
+                <div class="d-flex justify-content-end">
+                    <copy-to-clipboard-button/>
+                </div>
+                <sql-output-text-area/>
+            </b-card>
+
         </div>
     </div>
 </template>
+
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
@@ -22,29 +33,16 @@
     import SqlOutputTextArea from "../parts/SqlOutputTextArea.vue";
     import HomeHeader from "../parts/HomeHeader.vue";
     import InsertSampleButton from "../parts/InsertSampleButton.vue";
-    import sampleMd from "../../md/sample.md"
-    import {highlightAuto} from "highlight.js";
-    import marked from "marked";
+    import Introduction from "../parts/Introduction.vue";
+    import CopyToClipboardButton from "../parts/CopyToClipboardButton.vue";
 
     @Component({
-        components: {InsertSampleButton, HomeHeader, SqlOutputTextArea, ConfigInputTextArea, GenerateButton}
+        components: {
+            CopyToClipboardButton,
+            Introduction, InsertSampleButton, HomeHeader, SqlOutputTextArea, ConfigInputTextArea, GenerateButton
+        }
     })
     export default class Home extends Vue {
-        mounted() {
-            marked.setOptions({
-                highlight: function (code, lang) {
-                    return highlightAuto(code, [lang]).value;
-                },
-                pedantic: false,
-                gfm: true,
-                breaks: true,
-                sanitize: true,
-                silent: false
-            });
-        }
 
-        get sampleMdHtml(): string {
-            return marked(sampleMd.source)
-        }
     }
 </script>

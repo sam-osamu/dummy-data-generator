@@ -47,17 +47,11 @@ module.exports = [
                     exclude: /(node_modules)/
                 },
                 {
-                    test: /\.(vue|md)$/,
+                    test: /\.vue$/,
                     use: [
                         {
                             loader: "vue-loader"
-                        },
-                        {
-                            loader: 'markdown-to-vue-loader',
-                            options: {
-                                exportSource: true
-                            },
-                        },
+                        }
                     ]
                 },
                 {
@@ -102,6 +96,17 @@ module.exports = [
                         }
                     },
                     exclude: /(vendor|node_modules)/
+                },
+                {
+                    test: /\.md$/,
+                    use: [
+                        {
+                            loader: 'raw-loader',
+                            options: {
+                                esModule: true,
+                            },
+                        },
+                    ],
                 },
             ],
         },

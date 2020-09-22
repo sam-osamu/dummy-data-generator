@@ -7,7 +7,7 @@
     import {ApplicationStore} from "../../ts/store/ApplicationStoreModule";
 
     @Component({})
-    export default class GenerateButton extends Vue {
+    export default class InsertSampleButton extends Vue {
         insert() {
             ApplicationStore.setConfigText(`
 {

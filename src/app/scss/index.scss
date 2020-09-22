@@ -1,5 +1,6 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
+@import '~highlight.js/styles/hybrid.css';
 
 @font-face {
   font-family: "hack-gen";
@@ -15,24 +16,25 @@
 }
 
 html {
-  height: 100%;
+  height: 100vh;
 }
 
 body {
   position: relative;
-  height: 100%;
+  min-height: 100%;
   font-family: 'hack-gen', monospace;
 
   &::before {
     display: block;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     content: " ";
     position: absolute;
     background-image: url("image/18693.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-attachment: fixed;
     opacity: 0.60;
     z-index: -2;
   }
@@ -40,7 +42,7 @@ body {
   &::after {
     display: block;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     content: " ";
     position: absolute;
     top: 0;
@@ -49,6 +51,7 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-attachment: fixed;
     z-index: -1;
     opacity: 0.10;
   }

@@ -1,5 +1,5 @@
 <template>
-    <b-button block variant="dark" v-on:click="generate">Generate!</b-button>
+    <b-button block variant="dark" class="pt-2 pb-2" v-on:click="generate">Generate!</b-button>
 </template>
 
 <script lang="ts">

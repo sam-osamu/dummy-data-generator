@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import Home from '../vue/template/Home.vue';
 

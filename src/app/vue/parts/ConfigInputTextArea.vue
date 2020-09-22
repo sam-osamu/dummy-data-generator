@@ -1,5 +1,5 @@
 <template>
-    <b-form-textarea class="w-100 font-hack-gen font-size-code" rows="16" v-bind:value="text" @input="onTextAreaChanged"></b-form-textarea>
+    <b-form-textarea class="w-100 font-hack-gen font-size-code" rows="12" v-bind:value="text" @input="onTextAreaChanged"></b-form-textarea>
 </template>
 
 <script lang="ts">
