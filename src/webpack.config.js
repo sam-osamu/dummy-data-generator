@@ -1,9 +1,9 @@
 const Path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
-const GENERATE_SOURCE_MAPS = (process.env.NODE_ENV !== 'production');
+const PRODUCTION = (process.env.NODE_ENV === 'production');
+const GENERATE_SOURCE_MAPS = !PRODUCTION;
 
 module.exports = [
     {
@@ -14,14 +14,13 @@ module.exports = [
             "./app/scss/index.scss"
         ],
         output: {
-            path: Path.resolve(__dirname, "../docs"),
+            path: Path.resolve(__dirname, (PRODUCTION) ? "../docs" : "./docs-dev"),
             filename: 'index.js'
         },
         resolve: {
             extensions: ['.ts', '.js', '.scss', ".vue"]
         },
         plugins: [
-            // new HardSourceWebpackPlugin(),
             new VueLoaderPlugin(),
             new MiniCssExtractPlugin({
                 filename: 'index.css'

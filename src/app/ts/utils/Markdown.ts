@@ -10,7 +10,7 @@ export class Markdown {
             },
             breaks: true,
             gfm: true,
-            sanitize: true,
+            sanitize: false,
             silent: false,
             langPrefix: "rounded p-3 hljs font-hack-gen language-"
         });

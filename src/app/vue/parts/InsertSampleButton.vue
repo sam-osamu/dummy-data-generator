@@ -63,7 +63,7 @@
                 {
                     "name": "main_id",
                     "foreignKey": {
-                        "table": "t_ochinchin_info",
+                        "table": "employee_table",
                         "column": "id"
                     }
                 },

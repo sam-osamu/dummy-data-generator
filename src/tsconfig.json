@@ -15,7 +15,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "experimentalDecorators": true,
-    "allowJs": true,
+    "allowJs": false,
     "lib": [
       "es2017",
       "dom"

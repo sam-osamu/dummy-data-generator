@@ -6,7 +6,7 @@
                 <introduction/>
             </b-card>
             <b-card class="mb-4">
-                <b-card-header header-tag="h3">ダミーデータ生成設定値</b-card-header>
+                <b-card-header header-tag="h4">ダミーデータ生成設定値</b-card-header>
                 <div class="d-flex justify-content-end">
                     <insert-sample-button/>
                 </div>
@@ -14,7 +14,7 @@
                 <generate-button class="mt-4"/>
             </b-card>
             <b-card class="mb-4">
-                <b-card-header header-tag="h3">出来上がったダミーデータ</b-card-header>
+                <b-card-header header-tag="h4">出来上がったダミーデータ</b-card-header>
                 <div class="d-flex justify-content-end">
                     <copy-to-clipboard-button/>
                 </div>

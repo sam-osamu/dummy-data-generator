@@ -12,7 +12,7 @@ export class TableOutput {
         this.generatorConfig = generatorConfig;
         this.src = src;
         this.cols = src.columns.map(i => new ColumnOutput(this, i));
-        this.autoIncrementIndex = 0;
+        this.autoIncrementIndex = 1;
     }
 
     public getAndIncrementIndex(): number {
