@@ -1,12 +1,11 @@
 import marked from "marked";
-
-import {highlightAuto} from "highlight.js";
+import {SyntaxHighlight} from "./SyntaxHighlight";
 
 export class Markdown {
     public static parse(markdownText: string): string {
         return marked(markdownText, {
             highlight: function (code, lang) {
-                return highlightAuto(code, [lang]).value;
+                return SyntaxHighlight.highlight(code, [lang]);
             },
             breaks: true,
             gfm: true,

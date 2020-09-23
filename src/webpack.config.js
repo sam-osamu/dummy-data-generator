@@ -1,6 +1,8 @@
 const Path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
+const zopfli = require("node-zopfli");
 
 const PRODUCTION = (process.env.NODE_ENV === 'production');
 const GENERATE_SOURCE_MAPS = !PRODUCTION;
@@ -24,6 +26,12 @@ module.exports = [
             new VueLoaderPlugin(),
             new MiniCssExtractPlugin({
                 filename: 'index.css'
+            }),
+            new CompressionPlugin({
+                test: /\.(css)|(js)$/,
+                algorithm(input, compressionOptions, callback) {
+                    return zopfli.gzip(input, compressionOptions, callback);
+                }
             }),
         ],
         module: {
