@@ -37,18 +37,6 @@
                         "address.streetAddress",
                         "address.secondaryAddress"
                     ]
-                },
-                {
-                    "name": "telephone",
-                    "fakerOrder": "phone.phoneNumber"
-                },
-                {
-                    "name": "email",
-                    "fakerOrder": "internet.email"
-                },
-                {
-                    "name": "remarks",
-                    "fakerOrder": "lorem.text"
                 }
             ]
         },
@@ -68,8 +56,8 @@
                     }
                 },
                 {
-                    "name": "remarks",
-                    "fakerOrder": "lorem.text"
+                    "name": "chooseSample",
+                    "chooseFrom": ["おはよう！", "こんにちは！", "こんばんは！"]
                 }
             ]
         }

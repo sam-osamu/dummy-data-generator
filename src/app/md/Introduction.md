@@ -7,6 +7,10 @@
   
 ご意見・ご要望は[Githubリポジトリ](https://github.com/sam-osamu/dummy-data-generator)のissueにて承ります。
 
+```text
+2020/10/01：chooseFromとFKによる値生成順序の入れ替え機能を追加
+```
+
 ### 使い方
 下記のような書式に則って記述したJSONをテキストボックスに記述し、Generateボタンを押すと作成できます。  
 
@@ -36,6 +40,9 @@
     * autoIncrement  
     省略可。true/falseのみ設定可。
     オートインクリメントによるID自動採番を行うカラムかどうかを設定する。
+    * chooseFrom
+    省略可。文字列配列のみ許容。  
+    この配列に設定された値の中からランダムで選定し、それをInsert時に使用するようになる。
     * fakeOrder  
     省略可。文字列または文字列の配列のみ許容。  
     [Faker.jsのAPI Methods](https://github.com/marak/Faker.js/#api-methods)に記載されているメソッドを[Faker.jsのFaker.fake()](https://github.com/marak/Faker.js/#fakerfake)の書式で表した文字列を設定する。  
@@ -102,6 +109,10 @@
                         "table": "employee_table",
                         "column": "id"
                     }
+                },
+                {
+                    "name": "chooseSample",
+                    "chooseFrom": ["おはよう！", "こんにちは！", "こんばんは！"]
                 }
             ]
         }
