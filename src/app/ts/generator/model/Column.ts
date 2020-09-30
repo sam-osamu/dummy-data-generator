@@ -20,17 +20,6 @@ export class Column {
         return (value === undefined) ? false : value;
     }
 
-    public get fakeOrder(): string[] {
-        const value = this.input.fakerOrder;
-        if (value === undefined) {
-            return [];
-        } else if (value instanceof Array) {
-            return value;
-        } else {
-            return [value];
-        }
-    }
-
     public get foreignKey(): ForeignKey | null {
         if (this.input.foreignKey === undefined) {
             return null
@@ -40,5 +29,26 @@ export class Column {
             table: this.input.foreignKey.table,
             column: this.input.foreignKey.column
         }
+    }
+
+    public get chooseFrom(): string[] {
+        if (this.input.chooseFrom === undefined) {
+            return [];
+        }
+
+        return this.input.chooseFrom;
+    }
+
+    public get fakeOrder(): string[] {
+        const value = this.input.fakerOrder;
+        if (value === undefined) {
+            return [];
+        } else if (value instanceof Array) {
+            return value;
+        } else if (typeof value === "string") {
+            return [value];
+        }
+
+        return [];
     }
 }

@@ -27,12 +27,7 @@ export class ColumnOutput {
     }
 
     public generateFromValues(src: any[]) {
-        this.value = [];
-        const loopCnt = this.parent.count;
-        for (let i = 0; i < loopCnt; i++) {
-            const randomIndex = Math.floor(Math.random() * Math.floor(src.length));
-            this.value.push(src[randomIndex]);
-        }
+        this.value = ColumnOutput.randomChoice(src, this.parent.count)
     }
 
     public generate() {
@@ -42,10 +37,20 @@ export class ColumnOutput {
             for (let i = 0; i < loopCnt; i++) {
                 this.value.push(this.parent.getAndIncrementIndex())
             }
+        } else if(this.src.chooseFrom.length >= 1) {
+            this.value = ColumnOutput.randomChoice(this.src.chooseFrom, loopCnt);
         } else {
             for (let i = 0; i < loopCnt; i++) {
                 this.value.push(this.src.fakeOrder.map(i => faker.fake(`{{${i}}}`)).join(" "))
             }
         }
+    }
+
+    private static randomChoice(src: any[], cnt: number): any[] {
+        const ret: any[] = [];
+        for (let i = 0; i < cnt; i++) {
+            ret.push(faker.random.arrayElement(src));
+        }
+        return ret;
     }
 }

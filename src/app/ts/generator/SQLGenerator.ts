@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import * as Enumerable from "linq"
 import {GeneratorConfig} from "./config/GeneratorConfig";
 import {Table} from "./model/Table";
 import {TableOutput} from "./output/TableOutput";
@@ -14,9 +15,46 @@ export class SQLGenerator {
     }
 
     public generate(): string {
-        const tableOutput: TableOutput[] = this.tables.map(i => new TableOutput(this.config, i));
+        let tableOutput: TableOutput[] = this.tables.map(i => new TableOutput(this.config, i));
+        tableOutput = SQLGenerator.sortTableOrder(tableOutput);
+
         SQLGenerator.execGenerateColumns(tableOutput);
         return SQLGenerator.generateSqlScript(tableOutput);
+    }
+
+    private static sortTableOrder(targets: TableOutput[]): TableOutput[] {
+        let tableOutResult: TableOutput[] = [];
+
+        while (true) {
+            const target = targets.pop();
+            if (target === undefined) {
+                break;
+            }
+
+            const fkColumnList = Enumerable.from(target.columns)
+                .select(i => i.foreignKey)
+                .where(i => i !== null)
+                .toArray();
+            if (Enumerable.from(fkColumnList).isEmpty()) {
+                // FKなしの場合は先に生成するものとして先頭から追加
+                tableOutResult = [target].concat(tableOutResult)
+            } else {
+                // FKありの場合はテーブル出力一覧にある中からFKの示すテーブルを探し、
+                // そのインデックスの中から最も大きいインデックスを取り出す。
+                // すべてのFK参照先よりも後に値生成が出来るようにする
+                let insertIdx = Enumerable.from(fkColumnList)
+                    .select(fkColumn => tableOutResult.findIndex(outTable => (fkColumn !== null && fkColumn.table === outTable.name)))
+                    .max();
+
+                // FK参照先のテーブルのインデックスを持ってるので、その次にInsertしたい
+                // 無かったときは-1になるけど、インクリメントするので先頭になる
+                insertIdx++;
+
+                tableOutResult.splice(insertIdx, 0, target);
+            }
+        }
+
+        return tableOutResult;
     }
 
     private static execGenerateColumns(tableOutput: TableOutput[]) {
@@ -53,7 +91,7 @@ export class SQLGenerator {
             out.push("VALUES");
 
             const matrix: string[][] = [];
-            for(let i = 0; i < table.count; i++) {
+            for (let i = 0; i < table.count; i++) {
                 matrix.push(new Array<string>(table.columns.length))
             }
 
