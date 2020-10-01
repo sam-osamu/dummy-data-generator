@@ -3,6 +3,7 @@ import * as Enumerable from "linq"
 import {GeneratorConfig} from "./config/GeneratorConfig";
 import {Table} from "./model/Table";
 import {TableOutput} from "./output/TableOutput";
+import {RelationType} from "./type/RelationType";
 
 export class SQLGenerator {
     private readonly config: GeneratorConfig;
@@ -63,20 +64,25 @@ export class SQLGenerator {
         tableOutput.forEach(table => {
             table.columns.forEach(column => {
                 const fk = column.foreignKey;
-                if (fk != null) {
-                    const refTable = tableMap.get(fk.table);
-                    if (refTable === undefined) {
-                        return;
-                    }
-
-                    const refColumn = refTable.get(fk.column);
-                    if (refColumn === undefined) {
-                        return;
-                    }
-
-                    column.generateFromValues(refColumn.values);
-                } else {
+                if (fk == null) {
                     column.generate();
+                    return;
+                }
+
+                const refTable = tableMap.get(fk.table);
+                if (refTable === undefined) {
+                    return;
+                }
+
+                const refColumn = refTable.get(fk.column);
+                if (refColumn === undefined) {
+                    return;
+                }
+
+                if (fk.relation === RelationType.One) {
+                    column.copyFromValues(refColumn.values);
+                } else {
+                    column.generateFromValues(refColumn.values);
                 }
             })
         });
@@ -90,15 +96,19 @@ export class SQLGenerator {
             out.push("  (" + table.columns.map(i => i.name).join(", ") + ")");
             out.push("VALUES");
 
+            // unique制約などでテーブルの生成件数よりも少ないケースがあるので、最小件数を求める
+            const minColumnValuesCount = Enumerable.from(table.columns).min(i => i.values.length);
+
+            const genCount = (minColumnValuesCount < table.count) ? minColumnValuesCount : table.count;
             const matrix: string[][] = [];
-            for (let i = 0; i < table.count; i++) {
+            for (let i = 0; i < genCount; i++) {
                 matrix.push(new Array<string>(table.columns.length))
             }
 
             let columnIdx = 0;
             table.columns.forEach(column => {
                 let recordIdx = 0;
-                column.values.forEach(value => {
+                Enumerable.from(column.values).take(genCount).forEach(value => {
                     matrix[recordIdx][columnIdx] = value.toString().replace("\r\n", "").replace("\n", "");
                     recordIdx++;
                 });

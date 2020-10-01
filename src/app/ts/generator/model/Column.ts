@@ -1,6 +1,7 @@
 import {Table} from "./Table";
 import {ColumnConfig} from "../config/ColumnConfig"
 import {ForeignKey} from "./ForeignKey";
+import {RelationType} from "../type/RelationType";
 
 export class Column {
     private readonly parent: Table;
@@ -20,14 +21,22 @@ export class Column {
         return (value === undefined) ? false : value;
     }
 
+    public get unique(): boolean {
+        const value = this.input.unique;
+        return (value === undefined) ? false: value;
+    }
+
     public get foreignKey(): ForeignKey | null {
         if (this.input.foreignKey === undefined) {
             return null
         }
 
+        const rel = (this.input.foreignKey.relation === undefined) ? RelationType.Any : this.input.foreignKey.relation;
+
         return {
             table: this.input.foreignKey.table,
-            column: this.input.foreignKey.column
+            column: this.input.foreignKey.column,
+            relation: rel
         }
     }
 
